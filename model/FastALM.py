@@ -16,16 +16,9 @@ import sys
 import os
 from timm.layers import trunc_normal_
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
-
-from transformers.modeling_attn_mask_utils import _prepare_4d_causal_attention_mask
-
 from transformers import AutoConfig
-# from QFormer import BertLMHeadModel, BertConfig
-from attention_layer import RMSNorm, Attention, MHSA, Resampler
+from attention_layer import Attention, Resampler
 from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
-
 
 from peft import (
     peft_model, 
@@ -41,16 +34,10 @@ except (ImportError, RuntimeError, OSError):
     SDPA_AVAILABLE = False
 import warnings
 
-def set_trainable_parameters(module, type='freeze', requires_grad=False):
+def set_trainable_parameters(module, requires_grad=False):
     for param in module.parameters():
         param.requires_grad = requires_grad
     module._requires_grad = requires_grad
-
-    if type == 'train':
-        for name, module in module.named_modules():
-            if isinstance(module, nn.LayerNorm):
-                for param in module.parameters():
-                    param.requires_grad = True
 
 class StemLayer(nn.Module):
     def __init__(self,embed_dim: int):
@@ -301,8 +288,7 @@ class FastALM(nn.Module):
         lora_a=64,
         stage_tokens=[80,80,80],
         compression=True,
-        compression_size=60,
-        # llm_modules=["q_proj", "v_proj"],
+        compression_size=50,
         llm_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
         audio_token=['<|AUDIO|>','<|audio_bos|>','<|audio_eos|>'],
         model_name='Qwen/Qwen3-4B',
@@ -323,10 +309,9 @@ class FastALM(nn.Module):
         )
 
         self.tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False, trust_remote_code=True)
-        # task_token = ['<|ASR|>','<|AST|>','<|SSUM|>','<|SQA|>','<|AQA|>']
+        task_token = ['<|ASR|>','<|AST|>','<|SSUM|>','<|SQA|>','<|AQA|>']
         language_token = [f"<|{lang.upper()}|>" for lang in LANGUAGES]
-        special_token = audio_token + language_token
-        # special_token = audio_token + language_token + task_token
+        special_token = audio_token + language_token + task_token
         self.tokenizer.add_special_tokens({"additional_special_tokens":special_token})
 
         self.llm = AutoModelForCausalLM.from_pretrained(
@@ -522,6 +507,7 @@ class FastALM(nn.Module):
                     output[i, -length:] = seq
 
         return output
+
 
 
 
