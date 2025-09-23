@@ -13,8 +13,8 @@ cd FastALM
 pip install -r requirements.txt
 ```
 
-## Load Model
-Model weight available this [Link](https://drive.google.com/file/d/16LjeG4fMe7ABnb0_k47JjF6V5dweN3Zw/view?usp=sharing)
+## 📥 Load Model
+Model weights available [here](https://drive.google.com/file/d/16LjeG4fMe7ABnb0_k47JjF6V5dweN3Zw/view?usp=sharing)
 ```python
 import torch
 import torchaudio
@@ -34,23 +34,33 @@ model.load_state_dict(check_point["model_state_dict"])
 ```
 
 
-## Sample Inference
+## 🎤 Sample Inference
 
 ```python
+# 1. Load audio
 wav_path = "sample_audio.wav"
-wav,sample_rate  = torchaudio.load(wav_path)
+wav, sample_rate = torchaudio.load(wav_path)
+
+# 2. Resample to 16 kHz (required by FastALM)
 resampler = torchaudio.transforms.Resample(orig_freq=sample_rate, new_freq=16000)
-audio = resampler(wav)
+audio = resampler(wav).cuda()
 
+# 3. Prepare the prompt
 basic_prompt = "<|ASR|><|audio_bos|><|AUDIO|><|audio_eos|>\nTranscribe this audio clip into text."
-prompt = [
-    {"role": "user", "content":  basic_prompt},
-]
-conversation = model.tokenizer.apply_chat_template(prompt,add_generation_prompt=True,tokenize=False)
-print(conversation)
+prompt = [{"role": "user", "content": basic_prompt}]
 
-token = model.tokenizer(conversation,return_tensors='pt').input_ids.cuda()
+# 4. Apply chat template
+conversation = model.tokenizer.apply_chat_template(
+    prompt,
+    add_generation_prompt=True,
+    tokenize=False
+)
+print("Conversation template:", conversation)
 
+# 5. Convert to input IDs for the LLM
+token = model.tokenizer(conversation, return_tensors='pt').input_ids.cuda()
+
+# 6. Perform inference
 model.eval()
 with torch.no_grad():
     with torch.cuda.amp.autocast(dtype=torch.bfloat16):
@@ -59,5 +69,7 @@ with torch.no_grad():
             audio=audio
         )
 
-print(output[0])
+# 7. Print the transcription result
+print("Generated output:", output[0])
+
 ```
