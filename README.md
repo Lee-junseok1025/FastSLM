@@ -21,7 +21,7 @@ pip install -r requirements.txt
 | [duck.wav](./resource/audio_demo/duck.wav)             |
 | [music.wav](./resource/audio_demo/music.wav)           |
 
-## Sample Inference
+## Load Model
 ```python
 import torch
 import torchaudio
@@ -36,7 +36,15 @@ model = FastALM(
     compression_size=50, # Audio token length
 ).cuda()
 
+check_point = torch.load"your_path/Stage3_FastALM.pt"
+model.load_state_dict(check_point["model_state_dict"])
+```
 
+
+## Sample Inference
+
+```python
+wav_path = "sample_audio.wav"
 wav,sample_rate  = torchaudio.load(wav_path)
 resampler = torchaudio.transforms.Resample(orig_freq=sample_rate, new_freq=16000)
 audio = resampler(wav)
