@@ -17,7 +17,7 @@ pip install -r requirements.txt
 ```
 
 ## Smaple Inference
-```
+```python
 import torch
 from model.FastALM import FastALM
 model = FastALM(
