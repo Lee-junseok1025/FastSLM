@@ -12,16 +12,9 @@ git clone https://github.com/username/FastALM.git
 cd FastALM
 pip install -r requirements.txt
 ```
-## Sample Audio
-
-
-| Audio                                                  |
-| ------------------------------------------------------ |
-| [gunshots.wav](./resource/audio_demo/gunshots.wav)     |
-| [duck.wav](./resource/audio_demo/duck.wav)             |
-| [music.wav](./resource/audio_demo/music.wav)           |
 
 ## Load Model
+Model weight available this [Link](https://drive.google.com/file/d/16LjeG4fMe7ABnb0_k47JjF6V5dweN3Zw/view?usp=sharing)
 ```python
 import torch
 import torchaudio
