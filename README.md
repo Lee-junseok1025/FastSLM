@@ -15,6 +15,14 @@ git clone https://github.com/username/FastALM.git
 cd FastALM
 pip install -r requirements.txt
 ```
+## Sample Audio
+
+
+| Audio                                                  |
+| ------------------------------------------------------ |
+| [gunshots.wav](./resource/audio_demo/gunshots.wav)     |
+| [duck.wav](./resource/audio_demo/duck.wav)             |
+| [music.wav](./resource/audio_demo/music.wav)           |
 
 ## Smaple Inference
 ```python
