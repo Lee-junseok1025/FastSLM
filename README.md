@@ -1,7 +1,4 @@
-# FastALM
-FastALM: Hierarchical Frame Q-Former for Effective Audio Modality Adaptation
-
-# 🚀 FastALM
+# 🚀 FastALM: Hierarchical Frame Q-Former for Effective Audio Modality Adaptation
 FastALM is a **lightweight Audio-Language Model (ALM)** designed to efficiently handle **long-form audio inputs**.
 
 ## 🌟 Features
