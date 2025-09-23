@@ -44,7 +44,7 @@ wav,sample_rate  = torchaudio.load(wav_path)
 resampler = torchaudio.transforms.Resample(orig_freq=sample_rate, new_freq=16000)
 audio = resampler(wav)
 
-basic_prompt = '<|ASR|><|audio_bos|><|AUDIO|><|audio_eos|>\nTranscribe this audio clip into text.'
+basic_prompt = "<|ASR|><|audio_bos|><|AUDIO|><|audio_eos|>\nTranscribe this audio clip into text."
 prompt = [
     {"role": "user", "content":  basic_prompt},
 ]
