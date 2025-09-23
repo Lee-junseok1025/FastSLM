@@ -7,7 +7,7 @@ FastALM is a **lightweight Audio-Language Model (ALM)** designed to efficiently 
 ## 🌟 Features
 - 🔊 **HFQ-Former**: Hierarchically compresses high-frame-rate audio features while preserving context
 - ⚡ **3-Stage Training**: Cost-effective and fast training strategy
-- 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the speech modality
+- 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the Audio modality
 
 ## 📦 Installation
 ```bash
