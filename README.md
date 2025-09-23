@@ -8,7 +8,7 @@ FastALM is a **lightweight Audio-Language Model (ALM)** designed to efficiently 
 
 ## 📦 Installation
 ```bash
-git clone https://github.com/username/FastALM.git
+git clone https://anonymous.4open.science/r/FastALM-1D6B
 cd FastALM
 pip install -r requirements.txt
 ```
