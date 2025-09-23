@@ -5,4 +5,5 @@ librosa==0.11.0
 gradio==3.50.2
 transformers==4.53.1
 accelerate==0.34.2
+openai-whisper==20240930
 soundfile
