@@ -57,7 +57,7 @@ conversation = model.tokenizer.apply_chat_template(
 )
 print("Conversation template:", conversation)
 
-# 5. Convert to input IDs for the LLM
+# 5. Tokenize
 token = model.tokenizer(conversation, return_tensors='pt').input_ids.cuda()
 
 # 6. Perform inference
