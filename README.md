@@ -24,7 +24,7 @@ pip install -r requirements.txt
 | [duck.wav](./resource/audio_demo/duck.wav)             |
 | [music.wav](./resource/audio_demo/music.wav)           |
 
-## Smaple Inference
+## Sample Inference
 ```python
 import torch
 import torchaudio
