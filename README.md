@@ -46,7 +46,14 @@ resampler = torchaudio.transforms.Resample(orig_freq=sample_rate, new_freq=16000
 audio = resampler(wav).cuda()
 
 # 3. Prepare the prompt
-basic_prompt = "<|ASR|><|audio_bos|><|AUDIO|><|audio_eos|>\nTranscribe this audio clip into text."
+# Task Token exists 4 task
+# Automatic Speech Recognition: <|ASR|>
+# Automatic Speech Translation: <|AST|>
+# Speech Summarization: <SSUM|>
+# Spoken Query-based Question Answering: <|SQQA|>
+task_token = "<|ASR|>"
+audio_tokens = "<|audio_bos|><AUDIO|><|audio_eos|>"
+basic_prompt = f"{task_token}{audio_token}\nTranscribe this audio clip into text."
 prompt = [{"role": "user", "content": basic_prompt}]
 
 # 4. Apply chat template
