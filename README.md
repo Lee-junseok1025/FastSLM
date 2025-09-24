@@ -6,12 +6,12 @@ FastALM is a **lightweight Audio-Language Model (ALM)** designed to efficiently 
 - ⚡ **3-Stage Training**: Cost-effective and fast training strategy
 - 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the Audio modality
 
-% ## 📦 Installation
-% ```bash
-%git clone https://anonymous.4open.science/r/FastALM-1D6B
-%cd FastALM
-%pip install -r requirements.txt
-% ```
+<!-- 📦 Installation
+ ```bash
+git clone https://anonymous.4open.science/r/FastALM-1D6B
+cd FastALM
+pip install -r requirements.txt
+```-->
 
 ## 📥 Load Model
 Model weights available [here](https://drive.google.com/file/d/16LjeG4fMe7ABnb0_k47JjF6V5dweN3Zw/view?usp=sharing)
