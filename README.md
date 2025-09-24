@@ -2,7 +2,7 @@
 FastALM is a **lightweight Audio-Language Model (ALM)** designed to efficiently handle **long-form audio inputs**.
 
 ## 🌟 Features
-- 🔊 **HFQ-Former**: Hierarchically compresses high-frame-rate audio features while preserving context
+- 🔊 **HFQ-Former**: Hierarchically compresses high-frame-rate audio features while preserving audio local and global contextual
 - ⚡ **3-Stage Training**: Cost-effective and fast training strategy
 - 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the Audio modality
 ![sac](figure/HFQ-Former.png)
