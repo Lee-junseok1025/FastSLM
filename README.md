@@ -49,7 +49,7 @@ audio = resampler(wav).cuda()
 # Task Token exists 4 task
 # Automatic Speech Recognition: <|ASR|>
 # Automatic Speech Translation: <|AST|>
-# Speech Summarization: <SSUM|>
+# Speech Summarization: <|SSUM|>
 # Spoken Query-based Question Answering: <|SQQA|>
 task_token = "<|ASR|>"
 audio_tokens = "<|audio_bos|><AUDIO|><|audio_eos|>"
