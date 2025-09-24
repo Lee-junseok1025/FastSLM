@@ -5,8 +5,8 @@ FastALM is a **lightweight Audio-Language Model (ALM)** designed to efficiently 
 - 🔊 **HFQ-Former**: Hierarchically compresses high-frame-rate audio features while preserving context
 - ⚡ **3-Stage Training**: Cost-effective and fast training strategy
 - 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the Audio modality
-<!-- ![sac](figure/HFQ-Former.png)-->    
-<img src="[https://github.com/Lee-junseok1025/FastALM/blob/main/figure/HFQ-Former.png" width="400" />
+![sac](figure/HFQ-Former.png)
+<!-- <img src="[https://github.com/Lee-junseok1025/FastALM/blob/main/figure/HFQ-Former.png" width="400" />-->
 
 <!-- 📦 Installation
  ```bash
@@ -80,5 +80,13 @@ with torch.no_grad():
 
 # 7. Print the transcription result
 print("Generated output:", output[0])
-
 ```
+
+## ⚡ GPU Requirements
+FastALM training and inference require a GPU with sufficient memory:
+
+| Task            | Recommended GPU | Minimum VRAM |
+|-----------------|------------------|--------------|
+| **Inference**   |NVIDIA A100 / H100 | ≥ 11.2 GB |
+
+> 💡 Mixed Precision (`bfloat16` or `fp16`) is recommended to reduce memory usage.
