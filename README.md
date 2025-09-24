@@ -83,7 +83,7 @@ print("Generated output:", output[0])
 ```
 
 ## ⚡ GPU Requirements
-FastALM training and inference require a GPU with sufficient memory:
+FastALM inference require a GPU with sufficient memory:
 
 | Task            | Recommended GPU | Minimum VRAM |
 |-----------------|------------------|--------------|
