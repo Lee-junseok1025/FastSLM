@@ -40,7 +40,7 @@ model.load_state_dict(check_point["model_state_dict"])
 
 ```python
 # 1. Load audio
-wav_path = "sample_audio.wav"
+wav_path = "sample_audio/English_audio.wav"
 wav, sample_rate = torchaudio.load(wav_path)
 
 # 2. Resample to 16 kHz (required by FastALM)
