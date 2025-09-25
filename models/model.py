@@ -41,7 +41,7 @@ def set_trainable_parameters(module, requires_grad=False):
 
 class Downsampler(nn.Module):
     def __init__(self,embed_dim: int):
-        super(StemLayer,self).__init__()
+        super(Downsampler,self).__init__()
         self.conv1 = nn.Conv1d(embed_dim, embed_dim, kernel_size=3, padding=1)
         self.conv2 = nn.Conv1d(embed_dim, embed_dim, kernel_size=3, stride=2, padding=1)
         self.ln_post = nn.LayerNorm(embed_dim,eps=1e-5)
@@ -516,5 +516,6 @@ class FastALM(nn.Module):
 
 
         
+
 
 
