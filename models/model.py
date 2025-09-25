@@ -70,7 +70,7 @@ class SpeechEncoder(nn.Module):
         compression=True,
         stage_tokens=[80,80,80],
         compression_size=80,
-        encoder_mode='base.en',
+        encoder_mode='large-v3',
         depths=2
     ):
         super(SpeechEncoder,self).__init__()
@@ -139,7 +139,7 @@ class SpeechEncoder(nn.Module):
             speech_features = []
             speech_attn_mask = []
             for w in wav:
-                speech_feature = self.process_audio_for_input_llm(w)
+                speech_feature = self.process_audio_for_llm_input(w)
                 speech_features.append(speech_feature)
                 speech_attn_mask.append(torch.zeros(1,speech_feature.size(1)).bool())
 
@@ -162,7 +162,7 @@ class SpeechEncoder(nn.Module):
             array = np.pad(array, pad_widths)
         return array
     
-    def process_audio_for_input_llm(self, wav):
+    def process_audio_for_llm_input(self, wav):
         max_length = 480000
         n_frames = 3000
         wav = wav.flatten()
@@ -516,3 +516,4 @@ class FastALM(nn.Module):
 
 
         
+
