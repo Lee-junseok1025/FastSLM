@@ -32,7 +32,7 @@ model = FastALM(
 ).cuda()
 
 check_point = torch.load"your_path/Stage3_FastALM.pt"
-model.load_state_dict(check_point["model_state_dict"])
+model.load_state_dict(check_point)
 ```
 
 
