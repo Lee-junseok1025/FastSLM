@@ -17,7 +17,7 @@ import os
 from timm.layers import trunc_normal_
 
 from transformers import AutoConfig
-from attention_layer import Attention, Resampler
+from attention_layer import Attention, Compressor
 from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
 
 from peft import (
@@ -39,7 +39,7 @@ def set_trainable_parameters(module, requires_grad=False):
         param.requires_grad = requires_grad
     module._requires_grad = requires_grad
 
-class StemLayer(nn.Module):
+class Downsampler(nn.Module):
     def __init__(self,embed_dim: int):
         super(StemLayer,self).__init__()
         self.conv1 = nn.Conv1d(embed_dim, embed_dim, kernel_size=3, padding=1)
@@ -87,32 +87,32 @@ class SpeechEncoder(nn.Module):
         set_trainable_parameters(self.whisper,'freeze')
         self.llm_proj = nn.Linear(speech_dim, embed_dim)
 
-        self.resampler1 = Resampler(
+        self.compressor1 = Compressor(
             embed_dim=self.speech_dim,
             num_heads=self.num_heads,
             num_query=stage_tokens[0],
             n_ctx=1500,
         )
-        self.stage1 = StemLayer(
+        self.stage1 = Downsampler(
             embed_dim=self.speech_dim
         )
-        self.resampler2 = Resampler(
+        self.compressor2 = Compressor(
             embed_dim=self.speech_dim,
             num_heads=self.num_heads,
             num_query=stage_tokens[1],
             n_ctx=750,
         )
-        self.stage2 = StemLayer(
+        self.stage2 = Downsampler(
             embed_dim=self.speech_dim
         )
-        self.resampler3 = Resampler(
+        self.compressor3 = Compressor(
             embed_dim=self.speech_dim,
             num_heads=self.num_heads,
             num_query=stage_tokens[2],
             n_ctx=375,
         )
 
-        self.compressor = Resampler(
+        self.compressor = Compressor(
             embed_dim=self.speech_dim,
             num_heads=self.num_heads,
             num_query=compression_size,
@@ -180,13 +180,13 @@ class SpeechEncoder(nn.Module):
             features_per_segment = []
             for segment_mel in mel_segments:
                 segment_features = self.embed_audio(segment_mel)
-                stage_1_token = self.resampler1(x=segment_features)
+                stage_1_token = self.compressor1(x=segment_features)
 
                 stage_1_feature = self.stage1(segment_features.transpose(1,2))
-                stage_2_token = self.resampler2(x=stage_1_feature)
+                stage_2_token = self.compressor2(x=stage_1_feature)
 
                 stage_2_feature = self.stage2(stage_1_feature.transpose(1,2))
-                stage_3_token = self.resampler3(x=stage_2_feature)
+                stage_3_token = self.compressor3(x=stage_2_feature)
 
                 stage_tokens = torch.cat([
                     stage_1_token,stage_2_token,stage_3_token
@@ -212,13 +212,13 @@ class SpeechEncoder(nn.Module):
         else:
             mels = self.pad_or_trim(mels,3000)
             audio_feature = self.embed_audio(mels)
-            stage_1_token = self.resampler1(x=audio_feature)
+            stage_1_token = self.compressor1(x=audio_feature)
 
             stage_1_feature = self.stage1(audio_feature.transpose(1,2))
-            stage_2_token = self.resampler2(x=stage_1_feature)
+            stage_2_token = self.compressor2(x=stage_1_feature)
 
             stage_2_feature = self.stage2(stage_1_feature.transpose(1,2))
-            stage_3_token = self.resampler3(x=stage_2_feature)
+            stage_3_token = self.compressor3(x=stage_2_feature)
 
             stage_tokens = torch.cat([
                 stage_1_token,stage_2_token,stage_3_token
@@ -516,4 +516,5 @@ class FastALM(nn.Module):
 
 
         
+
 
