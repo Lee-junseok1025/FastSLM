@@ -112,7 +112,7 @@ class SpeechEncoder(nn.Module):
             n_ctx=375,
         )
 
-        self.compressor = Compressor(
+        self.last_compressor = Compressor(
             embed_dim=self.speech_dim,
             num_heads=self.num_heads,
             num_query=compression_size,
@@ -192,7 +192,7 @@ class SpeechEncoder(nn.Module):
                     stage_1_token,stage_2_token,stage_3_token
                 ],dim=1)
 
-                compressed_tokens = self.compressor(stage_tokens)
+                compressed_tokens = self.last_compressor(stage_tokens)
 
                 h_audio_feature = torch.cat([
                     segment_features,stage_1_feature,stage_2_feature
@@ -224,7 +224,7 @@ class SpeechEncoder(nn.Module):
                 stage_1_token,stage_2_token,stage_3_token
             ],dim=1)
 
-            compressed_tokens = self.compressor(stage_tokens)
+            compressed_tokens = self.last_compressor(stage_tokens)
 
             h_audio_feature = torch.cat([
                 audio_feature,stage_1_feature,stage_2_feature
@@ -516,6 +516,7 @@ class FastALM(nn.Module):
 
 
         
+
 
 
 
