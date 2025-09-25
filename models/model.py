@@ -30,10 +30,6 @@ LANGUAGES = {
     "en": "english",
     "ko": "korean"
 }
-LANGUAGES = {
-    "en": "english",
-    "ko": "korean"
-}
 
 def set_trainable_parameters(module, requires_grad=False):
     for param in module.parameters():
@@ -517,6 +513,7 @@ class FastALM(nn.Module):
 
 
         
+
 
 
 
