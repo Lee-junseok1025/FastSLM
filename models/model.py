@@ -11,7 +11,6 @@ import whisper
 import math
 from einops import rearrange
 from typing import Dict, Iterable, Optional, Tuple
-from model_utils.language import LANGUAGES
 import sys
 import os
 from timm.layers import trunc_normal_
@@ -32,7 +31,11 @@ try:
 except (ImportError, RuntimeError, OSError):
     scaled_dot_product_attention = None
     SDPA_AVAILABLE = False
-import warnings
+
+LANGUAGES = {
+    "en": "english",
+    "ko": "korean"
+}
 
 def set_trainable_parameters(module, requires_grad=False):
     for param in module.parameters():
@@ -516,6 +519,7 @@ class FastALM(nn.Module):
 
 
         
+
 
 
 
