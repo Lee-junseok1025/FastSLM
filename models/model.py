@@ -2,25 +2,19 @@ import torch
 import torch.nn as nn
 import torchaudio
 import torch.nn.functional as F
-import librosa
-import soundfile as sf
 
 import numpy as np
 from torch import Tensor
 import whisper
-import math
 from einops import rearrange
 from typing import Dict, Iterable, Optional, Tuple
 import sys
 import os
-from timm.layers import trunc_normal_
 
-from transformers import AutoConfig
 from attention_layer import Attention, Compressor
-from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from peft import (
-    peft_model, 
     LoraConfig, 
     get_peft_model
 )
@@ -32,6 +26,10 @@ except (ImportError, RuntimeError, OSError):
     scaled_dot_product_attention = None
     SDPA_AVAILABLE = False
 
+LANGUAGES = {
+    "en": "english",
+    "ko": "korean"
+}
 LANGUAGES = {
     "en": "english",
     "ko": "korean"
@@ -519,6 +517,7 @@ class FastALM(nn.Module):
 
 
         
+
 
 
 
