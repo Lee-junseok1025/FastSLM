@@ -83,7 +83,7 @@ class Compressor(nn.Module):
         x: Tensor,
         mask: Optional[Tensor] = None,
     ):
-        q = self.q_ln(self.query.to(x.device))
+        q = self.q_ln(self.query.expand(x.shape[0], -1, -1).to(x.device))
         x = self.kv_ln(self.kv_proj(x))
 
         q = rearrange(q + self.q_pos_embeds,'b l (h d) -> b h l d',h=self.num_heads,d=self.head_dims) 
@@ -207,6 +207,7 @@ class SpeechEncoder(nn.Module):
         self.mel_dim = 128 if 'large' in encoder_mode else 80
         self.num_heads = speech_dim // 64
         self.compression = compression
+        self.compression_size = compression_size
         self.whisper = whisper.load_model(encoder_mode).encoder
         self.whisper.eval()
         set_trainable_parameters(self.whisper,False)
@@ -257,7 +258,7 @@ class SpeechEncoder(nn.Module):
         
     def forward(self, wav):
         if len(wav) <= 1:  
-            speech_token = self.process_audio_for_input_llm(wav)
+            speech_token = self.process_audio_for_llm_input(wav)
             speech_attn_mask = torch.zeros(1,speech_token.size(1)).bool().to(self.device)
             return speech_token, speech_attn_mask
         else:
@@ -302,37 +303,37 @@ class SpeechEncoder(nn.Module):
                     mel = self.pad_or_trim(mel,n_frames)
                 mel_segments.append(mel)
 
-            features_per_segment = []
-            for segment_mel in mel_segments:
-                segment_features = self.embed_audio(segment_mel)
-                stage_1_token = self.compressor1(x=segment_features)
+            audio_features = torch.cat(mel_segments) 
+            audio_features = self.embed_audio(audio_features)
 
-                stage_1_feature = self.stage1(segment_features.transpose(1,2))
-                stage_2_token = self.compressor2(x=stage_1_feature)
+            B, T, C = audio_features.shape
+            stage_1_token = self.compressor1(x=audio_features)
 
-                stage_2_feature = self.stage2(stage_1_feature.transpose(1,2))
-                stage_3_token = self.compressor3(x=stage_2_feature)
+            stage_1_feature = self.stage1(audio_features.transpose(1,2))
+            stage_2_token = self.compressor2(x=stage_1_feature)
 
-                stage_tokens = torch.cat([
-                    stage_1_token,stage_2_token,stage_3_token
-                ],dim=1)
+            stage_2_feature = self.stage2(stage_1_feature.transpose(1,2))
+            stage_3_token = self.compressor3(x=stage_2_feature)
 
-                compressed_tokens = self.compressor(stage_tokens)
+            stage_tokens = torch.cat([
+                stage_1_token,stage_2_token,stage_3_token
+            ],dim=1)
 
-                h_audio_feature = torch.cat([
-                    segment_features,stage_1_feature,stage_2_feature
-                ],dim=1)
+            compressed_tokens = self.compressor(stage_tokens)
 
-                for block in self.out_attn:
-                    compressed_tokens = block(
-                        x=compressed_tokens,
-                        xa=h_audio_feature
-                    )
-                features_per_segment.append(compressed_tokens)
+            h_audio_feature = torch.cat([
+                audio_features,stage_1_feature,stage_2_feature
+            ],dim=1)
+
+            for block in self.out_attn:
+                compressed_tokens = block(
+                    x=compressed_tokens,
+                    xa=h_audio_feature
+                )
 
             # Aggregate the results from all segments
-            speech_tokens = torch.cat(features_per_segment, dim=1)
-            speech_tokens = self.llm_proj(speech_tokens)
+            speech_tokens = self.llm_proj(compressed_tokens)
+            speech_tokens = speech_tokens.view(1, B * self.compression_size, self.embed_dim)
             return speech_tokens
         else:
             mels = self.pad_or_trim(mels,3000)
@@ -434,7 +435,7 @@ class FastALM(nn.Module):
         )
 
         self.tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False, trust_remote_code=True)
-        task_token = ['<|ASR|>','<|AST|>','<|SSUM|>','<|SQA|>','<|AQA|>']
+        task_token = ['<|ASR|>','<|AST|>','<|SSUM|>','<|SQQA|>']
         language_token = [f"<|{lang.upper()}|>" for lang in LANGUAGES]
         special_token = audio_token + language_token + task_token
         self.tokenizer.add_special_tokens({"additional_special_tokens":special_token})
@@ -518,7 +519,7 @@ class FastALM(nn.Module):
         input_ids,
         audio=None,
         wav_path=None,
-        max_length=512,
+        max_new_tokens=512,
         do_sample=True,
         top_k=20,
         top_p=0.5,
@@ -556,7 +557,7 @@ class FastALM(nn.Module):
             ) 
             generated_ids = self.llm.generate(
                 inputs_embeds=input_embeds,
-                max_new_tokens=max_length,
+                max_new_tokens=max_new_tokens,
                 attention_mask=attention_masks,  
                 use_cache=use_cache,
                 top_k=top_k,
@@ -577,7 +578,7 @@ class FastALM(nn.Module):
             with self.llm.disable_adapter():
                 generated_ids = self.llm.generate(
                 inputs_embeds=input_embeds,
-                max_new_tokens=max_length,
+                max_new_tokens=max_new_tokens,
                 attention_mask=attention_masks,  
                 use_cache=use_cache,
                 top_k=top_k,
