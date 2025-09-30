@@ -289,10 +289,13 @@ class SpeechEncoder(nn.Module):
         return array
     
     def process_audio_for_llm_input(self, wav):
-        max_length = 480000
+        min_length = 16000
         n_frames = 3000
         wav = wav.flatten()
         mels = whisper.log_mel_spectrogram(wav, n_mels=self.mel_dim).unsqueeze(0).to(self.device)
+
+        if wav.shape[0] < min_length:
+            wav = F.pad(wav, (0, min_length - wav.shape[0]))
 
         # Split the audio into non-overlapping windows
         if mels.shape[-1] > n_frames:
