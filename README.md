@@ -16,7 +16,7 @@ pip install -r requirements.txt
 ```-->
 
 ## 📥 Load Model
-Model weights available [here](https://drive.google.com/file/d/11BXWXAO5h6CV628JSi3fSduQfacXefPS/view?usp=sharing)
+Model weights available [here]([https://drive.google.com/file/d/1s8kRIy1ovreQYrN9_718T0ZxCNfMwKBt/view?usp=sharing)
 ```python
 import torch
 import torchaudio
