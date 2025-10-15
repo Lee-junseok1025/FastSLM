@@ -8,11 +8,8 @@ from torch import Tensor
 import whisper
 from einops import rearrange
 from typing import Dict, Iterable, Optional, Tuple
-import sys
-import os
-
 from transformers import AutoModelForCausalLM, AutoTokenizer
-
+from .modeling_whisper import AudioEncoder
 from peft import (
     LoraConfig, 
     get_peft_model
@@ -195,60 +192,67 @@ class SpeechEncoder(nn.Module):
         compression=True,
         stage_tokens=[80,80,80],
         compression_size=80,
-        encoder_mode='large-v3',
-        depths=2
+        mel_dim=128,
+        depths=2,
+        n_layer=32,
+        n_ctx=1500
     ):
         super(SpeechEncoder,self).__init__()
 
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.embed_dim = embed_dim
         self.n_audio_ctx = n_audio_ctx
-        self.speech_dim = speech_dim
-        self.mel_dim = 128 if 'large' in encoder_mode else 80
-        self.num_heads = speech_dim // 64
+        self.mel_dim = mel_dim
+        num_heads = speech_dim // 64
         self.compression = compression
         self.compression_size = compression_size
-        self.whisper = whisper.load_model(encoder_mode).encoder
+        self.whisper = AudioEncoder(
+            n_mels=mel_dim,
+            n_ctx=n_ctx,
+            n_state=speech_dim,
+            n_head=num_heads,
+            n_layer=n_layer
+        )
         self.whisper.eval()
         set_trainable_parameters(self.whisper,False)
         self.llm_proj = nn.Linear(speech_dim, embed_dim)
 
         self.compressor1 = Compressor(
-            embed_dim=self.speech_dim,
-            num_heads=self.num_heads,
+            embed_dim=speech_dim,
+            num_heads=num_heads,
             num_query=stage_tokens[0],
             n_ctx=1500,
         )
         self.stage1 = Downsampler(
-            embed_dim=self.speech_dim
+            embed_dim=speech_dim
         )
         self.compressor2 = Compressor(
-            embed_dim=self.speech_dim,
-            num_heads=self.num_heads,
+            embed_dim=speech_dim,
+            num_heads=num_heads,
             num_query=stage_tokens[1],
             n_ctx=750,
         )
         self.stage2 = Downsampler(
-            embed_dim=self.speech_dim
+            embed_dim=speech_dim
         )
         self.compressor3 = Compressor(
-            embed_dim=self.speech_dim,
-            num_heads=self.num_heads,
+            embed_dim=speech_dim,
+            num_heads=num_heads,
             num_query=stage_tokens[2],
             n_ctx=375,
         )
 
         self.compressor = Compressor(
-            embed_dim=self.speech_dim,
-            num_heads=self.num_heads,
+            embed_dim=speech_dim,
+            num_heads=num_heads,
             num_query=compression_size,
             n_ctx=stage_tokens[0] + stage_tokens[1] + stage_tokens[2]
         )
 
         self.out_attn = nn.ModuleList([
             Attention(
-            embed_dim=self.speech_dim,
-            num_heads=self.num_heads
+            embed_dim=speech_dim,
+            num_heads=num_heads
         )
         for _ in range(depths)
         ])
@@ -292,10 +296,12 @@ class SpeechEncoder(nn.Module):
         min_length = 16000
         n_frames = 3000
         wav = wav.flatten()
-        mels = whisper.log_mel_spectrogram(wav, n_mels=self.mel_dim).unsqueeze(0).to(self.device)
 
         if wav.shape[0] < min_length:
             wav = F.pad(wav, (0, min_length - wav.shape[0]))
+            
+        mels = whisper.log_mel_spectrogram(wav, n_mels=self.mel_dim).unsqueeze(0).to(self.device)
+
 
         # Split the audio into non-overlapping windows
         if mels.shape[-1] > n_frames:
@@ -420,8 +426,7 @@ class FastALM(nn.Module):
         compression_size=50,
         llm_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
         audio_token=['<|AUDIO|>','<|audio_bos|>','<|audio_eos|>'],
-        model_name='Qwen/Qwen3-4B',
-        encoder_mode='large-v3'
+        model_name='Qwen/Qwen3-4B'
         ):
         super(FastALM, self).__init__()
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -433,8 +438,7 @@ class FastALM(nn.Module):
             speech_dim=speech_dim,
             stage_tokens=stage_tokens,
             compression=compression,
-            encoder_mode=encoder_mode,
-            compression_size=compression_size,
+            compression_size=compression_size
         )
 
         self.tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False, trust_remote_code=True)
@@ -525,9 +529,9 @@ class FastALM(nn.Module):
         max_new_tokens=512,
         do_sample=True,
         top_k=20,
-        top_p=0.5,
+        top_p=0.95,
         repetition_penalty=1.0,
-        temperature=1.0,
+        temperature=0.3,
         num_beams=1,
         use_cache=True
     ):
