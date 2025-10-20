@@ -60,18 +60,15 @@ audio_tokens = "<|audio_bos|><AUDIO|><|audio_eos|>"
 basic_prompt = f"{task_token}{audio_token}\nTranscribe this audio clip into text."
 prompt = [{"role": "user", "content": basic_prompt}]
 
-# 4. Apply chat template
-conversation = model.tokenizer.apply_chat_template(
+# 4. Apply chat template and Tokenize
+token = model.tokenizer.apply_chat_template(
     prompt,
     add_generation_prompt=True,
-    tokenize=False
+    tokenize=True
 )
 print("Conversation template:", conversation)
 
-# 5. Tokenize
-token = model.tokenizer(conversation, return_tensors='pt').input_ids.cuda()
-
-# 6. Perform inference
+# 5. Perform inference
 model.eval()
 with torch.no_grad():
     with torch.cuda.amp.autocast(dtype=torch.bfloat16):
