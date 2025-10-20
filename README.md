@@ -41,12 +41,14 @@ model.load_state_dict(check_point)
 ```python
 # 1. Load audio
 wav_path = "sample_audio/English_audio.wav"
-wav, sample_rate = torchaudio.load(wav_path)
+wav,sample_rate  = librosa.load(wav_path)
 
 # 2. Resample to 16 kHz (required by FastALM)
-resampler = torchaudio.transforms.Resample(orig_freq=sample_rate, new_freq=16000)
-audio = resampler(wav).cuda()
-
+if sample_rate != 16000:
+    audio = librosa.resample(wav,orig_sr=sample_rate,target_sr=16000)
+else:
+    audio = wav
+audio_tensor = torch.tensor((audio,),dtype=torch.float32).cuda()
 # 3. Prepare the prompt
 # Task Token exists 4 task
 # Automatic Speech Recognition: <|ASR|>
@@ -75,7 +77,7 @@ with torch.no_grad():
     with torch.cuda.amp.autocast(dtype=torch.bfloat16):
         output = model.generate(
             input_ids=token,
-            audio=audio
+            audio=audio_tensor
         )
 
 # 7. Print the transcription result
