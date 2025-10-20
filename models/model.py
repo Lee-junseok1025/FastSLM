@@ -530,8 +530,7 @@ class FastALM(nn.Module):
         do_sample=True,
         top_k=20,
         top_p=0.95,
-        repetition_penalty=1.0,
-        temperature=0.3,
+        temperature=0.2,
         num_beams=1,
         use_cache=True
     ):
@@ -572,7 +571,6 @@ class FastALM(nn.Module):
                 temperature=temperature,
                 do_sample=do_sample,
                 num_beams=num_beams,
-                repetition_penalty=repetition_penalty,
                 bos_token_id=self.tokenizer.bos_token_id,
                 pad_token_id=self.tokenizer.pad_token_id,  
                 eos_token_id=self.tokenizer.eos_token_id
@@ -649,5 +647,6 @@ class FastALM(nn.Module):
 
 
         
+
 
 
