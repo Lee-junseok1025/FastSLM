@@ -64,9 +64,9 @@ prompt = [{"role": "user", "content": basic_prompt}]
 token = model.tokenizer.apply_chat_template(
     prompt,
     add_generation_prompt=True,
-    tokenize=True
-)
-print("Conversation template:", conversation)
+    tokenize=True,
+    return_tensors='pt'
+).cuda()
 
 # 5. Perform inference
 model.eval()
