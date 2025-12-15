@@ -413,7 +413,7 @@ class SpeechEncoder(nn.Module):
         return output
 
 
-class FastALM(nn.Module):
+class FastSLM(nn.Module):
     def __init__(
         self,
         embed_dim,
@@ -647,6 +647,7 @@ class FastALM(nn.Module):
 
 
         
+
 
 
 
