@@ -1,17 +1,17 @@
 # 🚀 FastALM: Hierarchical Frame Q-Former for Effective Audio Modality Adaptation
-FastALM is a **lightweight Audio-Language Model (ALM)** designed to efficiently handle **long-form audio inputs**.
+FastALM is a **lightweight Speech-Language Model (SLM)** designed to efficiently handle **long-form audio inputs**.
 
 ## 🌟 Features
 - 🔊 **HFQ-Former**: Hierarchically compresses high-frame-rate audio features while preserving audio local and global contextual
 - ⚡ **3-Stage Training**: Cost-effective and fast training strategy
 - 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the Audio modality
 ![sac](figure/HFQ-Former.png)
-<!-- <img src="[https://github.com/Lee-junseok1025/FastALM/blob/main/figure/HFQ-Former.png" width="400" />-->
+<!-- <img src="[https://github.com/Lee-junseok1025/FastSLM/blob/main/figure/HFQ-Former.png" width="400" />-->
 
 <!-- 📦 Installation
  ```bash
-git clone https://anonymous.4open.science/r/FastALM-1D6B
-cd FastALM
+git clone https://anonymous.4open.science/r/FastSLM-1D6B
+cd FastSLM
 pip install -r requirements.txt
 ```-->
 
@@ -20,9 +20,9 @@ Model weights available [here](https://drive.google.com/file/d/12dB9DXm8SjVFDymC
 ```python
 import torch
 import torchaudio
-from models.model import FastALM
+from models.model import FastSLM
 
-model = FastALM(
+model = FastSLM(
     embed_dim=2560, # LLM hidden size
     speech_dim=1280, # Audio Encoder hidden size
     lora=True, # LoRA activate
@@ -31,7 +31,7 @@ model = FastALM(
     compression_size=50, # Audio token length
 ).cuda()
 
-check_point = torch.load"your_path/Stage3_FastALM.pt"
+check_point = torch.load"your_path/Stage3_FastSLM.pt"
 model.load_state_dict(check_point)
 ```
 
@@ -43,7 +43,7 @@ model.load_state_dict(check_point)
 wav_path = "sample_audio/English_audio.wav"
 wav,sample_rate  = librosa.load(wav_path)
 
-# 2. Resample to 16 kHz (required by FastALM)
+# 2. Resample to 16 kHz (required by FastSLM)
 if sample_rate != 16000:
     audio = librosa.resample(wav,orig_sr=sample_rate,target_sr=16000)
 else:
@@ -82,7 +82,7 @@ print("Generated output:", output[0])
 ```
 
 ## ⚡ GPU Requirements
-FastALM inference require a GPU with sufficient memory:
+FastSLM inference require a GPU with sufficient memory:
 
 | Task            | Recommended GPU | Minimum VRAM |
 |-----------------|------------------|--------------|
