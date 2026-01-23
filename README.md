@@ -1,10 +1,10 @@
-# 🚀 FastALM: Hierarchical Frame Q-Former for Effective Audio Modality Adaptation
-FastALM is a **lightweight Speech-Language Model (SLM)** designed to efficiently handle **long-form audio inputs**.
+# 🚀 FastSLM: Hierarchical Frame Q-Former for Effective Speech Modality Adaptation
+FastSLM is a **lightweight Speech-Language Model (SLM)** designed to efficiently handle **long-form audio inputs**.
 
 ## 🌟 Features
-- 🔊 **HFQ-Former**: Hierarchically compresses high-frame-rate audio features while preserving audio local and global contextual
+- 🔊 **HFQ-Former**: Hierarchically compresses high-frame-rate speech features while preserving speech local and global contextual
 - ⚡ **3-Stage Training**: Cost-effective and fast training strategy
-- 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the Audio modality
+- 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the Speech modality
 ![sac](figure/HFQ-Former.png)
 <!-- <img src="[https://github.com/Lee-junseok1025/FastSLM/blob/main/figure/HFQ-Former.png" width="400" />-->
 
