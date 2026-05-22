@@ -1,11 +1,11 @@
-# 🚀 FastSLM: Hierarchical Frame Q-Former for Effective Speech Modality Adaptation
+# 🚀 FastSLM: Hierarchical Temporal Abstraction for Efficient Long-Form Speech Adaptation
 FastSLM is a **lightweight Speech-Language Model (SLM)** designed to efficiently handle **long-form audio inputs**.
 
 ## 🌟 Features
-- 🔊 **HFQ-Former**: Hierarchically compresses high-frame-rate speech features while preserving speech local and global contextual
+- 🔊 **Hierarchical Temporal Abstraction (HTA)**: Hierarchically compresses high-frame-rate speech features while preserving speech local and global contextual
 - ⚡ **3-Stage Training**: Cost-effective and fast training strategy
 - 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the Speech modality
-![sac](figure/HFQ-Former.png)
+![sac](figure/HTA.pdf)
 <!-- <img src="[https://github.com/Lee-junseok1025/FastSLM/blob/main/figure/HFQ-Former.png" width="400" />-->
 
 <!-- 📦 Installation
