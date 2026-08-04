@@ -17,6 +17,9 @@ pip install -r requirements.txt
 
 ## 📥 Load Model
 Model weights available [here](https://drive.google.com/file/d/12dB9DXm8SjVFDymC8pK8mAXj7c2MZhtS/view?usp=sharing)
+For HuggingFace user available:
+FastSLM: [here](https://huggingface.co/okestro-ai-lab/SYMPHONY)
+FastSLM-ASR: [here](https://huggingface.co/okestro-ai-lab/SYMPHONY-ASR)
 ```python
 import torch
 import torchaudio
