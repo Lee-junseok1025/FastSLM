@@ -90,6 +90,19 @@ FastSLM inference require a GPU with sufficient memory:
 
 | Task            | Recommended GPU | Minimum VRAM |
 |-----------------|------------------|--------------|
-| **Inference**   |NVIDIA A100 / H100 | ≥ 11.2 GB |
+| **Inference**   |NVIDIA A100 / H100 | ≈12 GB |
 
 > 💡 Mixed Precision (`bfloat16` or `fp16`) is recommended to reduce memory usage.
+>
+> ## 📖 Citation
+
+If you find FastSLM useful in your research, please cite:
+
+```bibtex
+@article{lee2026fastslm,
+  title={FastSLM: Hierarchical Temporal Abstraction for Efficient Long-Form Speech Adaptation},
+  author={Lee, Junseok and Lee, Sangyong and Chun, Chang-Jae},
+  journal={arXiv preprint arXiv:2601.06199},
+  year={2026}
+}
+```
