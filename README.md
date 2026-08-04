@@ -1,9 +1,9 @@
 # 🚀 FastSLM: Hierarchical Temporal Abstraction for Efficient Long-Form Speech Adaptation
-FastSLM is a **lightweight Speech-Language Model (SLM)** designed to efficiently handle **long-form audio inputs**.
+FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech understanding. It introduces the Hierarchical Temporal Abstractor (HTA), which progressively compresses speech representations to only 1.67 tokens/sec while preserving linguistic information.
 
 ## 🌟 Features
-- 🔊 **Hierarchical Temporal Abstraction (HTA)**: Hierarchically compresses high-frame-rate speech features while preserving speech local and global contextual
-- ⚡ **3-Stage Training**: Cost-effective and fast training strategy
+- 🔊 **Hierarchical Temporal Abstractor (HTA)**: Progressively compresses high-frame-rate speech features while preserving both local acoustic details and global semantic context.
+- ⚡ **Three-stage Training Pipeline**: Efficient adaptation using only publicly available ASR corpora.
 - 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the Speech modality
 ![sac](figure/HTA.pdf)
 <!-- <img src="[https://github.com/Lee-junseok1025/FastSLM/blob/main/figure/HFQ-Former.png" width="400" />-->
@@ -17,7 +17,8 @@ pip install -r requirements.txt
 
 ## 📥 Load Model
 Model weights available [here](https://drive.google.com/file/d/12dB9DXm8SjVFDymC8pK8mAXj7c2MZhtS/view?usp=sharing)
-For HuggingFace user available:
+
+## 🤗 HF Models
 FastSLM: [here](https://huggingface.co/okestro-ai-lab/SYMPHONY)
 FastSLM-ASR: [here](https://huggingface.co/okestro-ai-lab/SYMPHONY-ASR)
 ```python
@@ -34,7 +35,7 @@ model = FastSLM(
     compression_size=50, # Audio token length
 ).cuda()
 
-check_point = torch.load"your_path/Stage3_FastSLM.pt"
+checkpoint = torch.load("your_path/Stage3_FastSLM.pt")
 model.load_state_dict(check_point)
 ```
 
@@ -59,8 +60,8 @@ audio_tensor = torch.tensor((audio,),dtype=torch.float32).cuda()
 # Speech Summarization: <|SSUM|>
 # Spoken Query-based Question Answering: <|SQQA|>
 task_token = "<|ASR|>"
-audio_tokens = "<|audio_bos|><AUDIO|><|audio_eos|>"
-basic_prompt = f"{task_token}{audio_token}\nTranscribe this audio clip into text."
+audio_tokens = "<|audio_bos|><|AUDIO|><|audio_eos|>"
+basic_prompt = f"{task_token}{audio_tokens}\nTranscribe this audio clip into text."
 prompt = [{"role": "user", "content": basic_prompt}]
 
 # 4. Apply chat template and Tokenize
