@@ -15,7 +15,7 @@ cd FastSLM
 pip install -r requirements.txt
 ```-->
 
-## 📥 Load Model
+## 📥 Pytorch Model
 - Model weights available [here](https://drive.google.com/file/d/12dB9DXm8SjVFDymC8pK8mAXj7c2MZhtS/view?usp=sharing)
 
 ## 🤗 HF Models
