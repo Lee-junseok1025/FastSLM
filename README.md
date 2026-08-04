@@ -19,8 +19,8 @@ pip install -r requirements.txt
 Model weights available [here](https://drive.google.com/file/d/12dB9DXm8SjVFDymC8pK8mAXj7c2MZhtS/view?usp=sharing)
 
 ## 🤗 HF Models
-FastSLM: [here](https://huggingface.co/okestro-ai-lab/SYMPHONY)
-FastSLM-ASR: [here](https://huggingface.co/okestro-ai-lab/SYMPHONY-ASR)
+- FastSLM: [here](https://huggingface.co/okestro-ai-lab/SYMPHONY)
+- FastSLM-ASR: [here](https://huggingface.co/okestro-ai-lab/SYMPHONY-ASR)
 ```python
 import torch
 import torchaudio
