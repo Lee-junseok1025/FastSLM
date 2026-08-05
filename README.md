@@ -8,8 +8,17 @@ FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech un
 ![sac](figure/HTA.pdf)
 <!-- <img src="[https://github.com/Lee-junseok1025/FastSLM/blob/main/figure/HFQ-Former.png" width="400" />-->
 
-## 📦 Installation
- ```bash
+## ⚙️ Installation
+
+- System Requirements
+To process audio files, you need to install `ffmpeg` on your system.
+
+```bash
+sudo apt update
+sudo apt install ffmpeg
+```
+
+```bash
 git clone https://github.com/Lee-junseok1025/FastSLM
 cd FastSLM
 pip install -r requirements.txt
