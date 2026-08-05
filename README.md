@@ -10,7 +10,7 @@ FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech un
 
 ## 📦 Installation
  ```bash
-git clone https://anonymous.4open.science/r/FastSLM-1D6B
+git clone https://github.com/Lee-junseok1025/FastSLM
 cd FastSLM
 pip install -r requirements.txt
 ```
