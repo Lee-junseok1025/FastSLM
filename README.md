@@ -8,12 +8,12 @@ FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech un
 ![sac](figure/HTA.pdf)
 <!-- <img src="[https://github.com/Lee-junseok1025/FastSLM/blob/main/figure/HFQ-Former.png" width="400" />-->
 
-<!-- 📦 Installation
+## 📦 Installation
  ```bash
 git clone https://anonymous.4open.science/r/FastSLM-1D6B
 cd FastSLM
 pip install -r requirements.txt
-```-->
+```
 
 ## 📥 Pytorch Model
 - Model weights available [here](https://drive.google.com/file/d/12dB9DXm8SjVFDymC8pK8mAXj7c2MZhtS/view?usp=sharing)
