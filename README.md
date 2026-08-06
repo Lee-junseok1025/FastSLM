@@ -101,7 +101,7 @@ FastSLM inference requires a GPU with sufficient memory.
 |-----------------|------------------|--------------|
 | **Inference**   |NVIDIA A100 / H100 | ≈11 GB |
 
-> 💡 Mixed Precision (`bfloat16` or `fp16`) is recommended to reduce memory usage.
+> 💡 Mixed Precision (`bfloat16`) is recommended to reduce memory usage.
 >
 > ## 📖 Citation
 
