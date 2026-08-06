@@ -69,18 +69,17 @@ audio_tensor = torch.tensor((audio,),dtype=torch.float32).cuda()
 # Automatic Speech Translation: <|AST|>
 # Speech Summarization: <|SSUM|>
 # Spoken Query-based Question Answering: <|SQQA|>
-task_token = "<|ASR|>"
-audio_tokens = "<|audio_bos|><|AUDIO|><|audio_eos|>"
-basic_prompt = f"{task_token}{audio_tokens}\nTranscribe this audio clip into text."
-prompt = [{"role": "user", "content": basic_prompt}]
+TASK_TOKEN = "<|ASR|>" 
+AUDIO_TOKEN = "<|audio_bos|><|AUDIO|><|audio_eos|>"
+user_prompt = f"{TASK_TOKEN}{AUDIO_TOKEN}\nTranscribe the audio clip into text."
 
-# 4. Apply chat template and Tokenize
-token = model.tokenizer.apply_chat_template(
+prompt = [{"role": "user", "content": user_prompt}]
+input_ids = tokenizer.apply_chat_template(
     prompt,
     add_generation_prompt=True,
     tokenize=True,
     return_tensors='pt'
-).cuda()
+).to(model.device)
 
 # 5. Perform inference
 model.eval()
