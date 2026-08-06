@@ -3,10 +3,11 @@ FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech un
 
 ## 🌟 Features
 - 🔊 **Hierarchical Temporal Abstractor (HTA)**: Progressively compresses high-frame-rate speech features while preserving both local acoustic details and global semantic context.
-- ⚡ **Three-stage Training Pipeline**: Efficient adaptation using only publicly available ASR corpora.
-- 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the Speech modality
-<img src="[https://github.com/Lee-junseok1025/FastSLM/blob/main/figure/HTA.pdf" width="400" />
-
+- ⚡ **Three-stage Training Pipeline**: Uses accessible ASR corpora for speech adaptation, followed by multi-task instruction tuning.
+- 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the speech modality.
+<p align="center">
+  <img src="figure/HTA.pdf" width="700" alt="HTA architecture">
+</p>
 ## ⚙️ Installation
 
 - System Requirements
@@ -23,10 +24,10 @@ cd FastSLM
 pip install -r requirements.txt
 ```
 
-## 📥 Pytorch Model
+## 📥 PyTorch Model
 - Model weights available [here](https://drive.google.com/file/d/12dB9DXm8SjVFDymC8pK8mAXj7c2MZhtS/view?usp=sharing)
 
-## 🤗 HF Models
+## 🤗 Hugging Face Models
 - FastSLM: [here](https://huggingface.co/okestro-ai-lab/SYMPHONY)
 - FastSLM-ASR: [here](https://huggingface.co/okestro-ai-lab/SYMPHONY-ASR)
 ```python
@@ -94,7 +95,7 @@ print("Generated output:", output[0])
 ```
 
 ## ⚡ GPU Requirements
-FastSLM inference require a GPU with sufficient memory:
+FastSLM inference requires a GPU with sufficient memory.
 
 | Task            | Recommended GPU | Minimum VRAM |
 |-----------------|------------------|--------------|
