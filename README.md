@@ -6,7 +6,7 @@ FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech un
 - ⚡ **Three-stage Training Pipeline**: Uses accessible ASR corpora for speech adaptation, followed by multi-task instruction tuning.
 - 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the speech modality.
 <p align="center">
-  <img src="figure/HTA.png" width="700" alt="HTA architecture">
+  <img src="figure/HTA.png" width="1024" alt="HTA architecture">
 </p>
 ## ⚙️ Installation
 
