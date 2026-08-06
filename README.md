@@ -8,6 +8,7 @@ FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech un
 <p align="center">
   <img src="figure/HTA.png" width="1024" alt="HTA architecture">
 </p>
+
 ## ⚙️ Installation
 
 - System Requirements
