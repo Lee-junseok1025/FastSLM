@@ -190,7 +190,7 @@ class SpeechEncoder(nn.Module):
         speech_dim,
         n_audio_ctx=1500,
         compression=True,
-        stage_tokens=[80,80,80],
+        stage_tokens: Optional[Tuple[int, int, int]] = (80, 80, 80),
         compression_size=80,
         mel_dim=128,
         depths=2,
