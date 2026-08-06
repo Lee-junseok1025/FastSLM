@@ -5,8 +5,7 @@ FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech un
 - 🔊 **Hierarchical Temporal Abstractor (HTA)**: Progressively compresses high-frame-rate speech features while preserving both local acoustic details and global semantic context.
 - ⚡ **Three-stage Training Pipeline**: Efficient adaptation using only publicly available ASR corpora.
 - 🧠 **LLM Adaptation**: Adapts pre-trained LLMs to the Speech modality
-![sac](figure/HTA.pdf)
-<!-- <img src="[https://github.com/Lee-junseok1025/FastSLM/blob/main/figure/HFQ-Former.png" width="400" />-->
+<img src="[https://github.com/Lee-junseok1025/FastSLM/blob/main/figure/HTA.pdf" width="400" />
 
 ## ⚙️ Installation
 
