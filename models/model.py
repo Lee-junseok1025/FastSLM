@@ -428,7 +428,7 @@ class FastSLM(nn.Module):
         audio_token=['<|AUDIO|>','<|audio_bos|>','<|audio_eos|>'],
         model_name='Qwen/Qwen3-4B'
         ):
-        super(FastALM, self).__init__()
+        super(FastSLM, self).__init__()
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.embed_dim = embed_dim
         self.speech_dim = speech_dim
@@ -526,13 +526,14 @@ class FastSLM(nn.Module):
         input_ids,
         audio=None,
         wav_path=None,
-        max_new_tokens=512,
-        do_sample=True,
-        top_k=20,
-        top_p=0.95,
-        temperature=0.2,
-        num_beams=1,
-        use_cache=True
+        max_new_tokens: int = 512,
+        do_sample: bool = True,
+        top_k: int = 20,
+        top_p: float = 0.95,
+        temperature: float = 0.2,
+        num_beams: int = 1,
+        repetition_penalty: float = 1.0,
+        use_cache: bool = True
     ):
         token_embedding = self.llm.get_input_embeddings()
         audio_token_id = self.tokenizer.convert_tokens_to_ids("<|AUDIO|>")
