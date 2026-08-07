@@ -14,16 +14,23 @@ FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech un
 - System Requirements
 To process audio files, you need to install `ffmpeg` on your system.
 
+
 ```bash
 sudo apt update
 sudo apt install ffmpeg
 ```
 
 ```bash
-git clone https://github.com/Lee-junseok1025/FastSLM
+git clone https://anonymous.4open.science/r/FastSLM-8BD3
 cd FastSLM
 pip install -r requirements.txt
 ```
+
+<!-- ```bash
+git clone https://github.com/Lee-junseok1025/FastSLM
+cd FastSLM
+pip install -r requirements.txt
+``` -->
 
 ## 📥 PyTorch Model
 - Model weights available [here](https://drive.google.com/file/d/12dB9DXm8SjVFDymC8pK8mAXj7c2MZhtS/view?usp=sharing)
@@ -105,6 +112,7 @@ FastSLM inference requires a GPU with sufficient memory.
 >
 > ## 📖 Citation
 
+<!--
 If you find FastSLM useful in your research, please cite:
 
 ```bibtex
@@ -114,4 +122,4 @@ If you find FastSLM useful in your research, please cite:
   journal={arXiv preprint arXiv:2601.06199},
   year={2026}
 }
-```
+```-->
