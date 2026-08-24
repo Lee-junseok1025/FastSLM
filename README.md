@@ -21,25 +21,19 @@ sudo apt install ffmpeg
 ```
 
 ```bash
-git clone https://anonymous.4open.science/r/FastSLM-8BD3
+git clone https://github.com/Lee-junseok1025/FastSLM
 cd FastSLM
 pip install -r requirements.txt
 ```
 
-<!-- ```bash
-git clone https://github.com/Lee-junseok1025/FastSLM
-cd FastSLM
-pip install -r requirements.txt
-``` -->
-
 ## 📥 PyTorch Model
 - Model weights available [here](https://drive.google.com/file/d/12dB9DXm8SjVFDymC8pK8mAXj7c2MZhtS/view?usp=sharing)
 
-<!--
+
 ## 🤗 Hugging Face Models
 - FastSLM: [here](https://huggingface.co/okestro-ai-lab/SYMPHONY)
 - FastSLM-ASR: [here](https://huggingface.co/okestro-ai-lab/SYMPHONY-ASR)
--->
+
 
 ```python
 import torch
