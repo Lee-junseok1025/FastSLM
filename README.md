@@ -109,7 +109,7 @@ FastSLM inference requires a GPU with sufficient memory.
 
 > 💡 Mixed Precision (`bfloat16`) is recommended to reduce memory usage.
 
-> ## 📖 Citation
+## 📖 Citation
 
 If you find FastSLM useful in your research, please cite:
 
