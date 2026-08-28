@@ -17,7 +17,7 @@ FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech un
 FastSLM achieves a strong balance between speech understanding performance and computational efficiency while using only **1.67 speech tokens/sec**.
 
 <p align="center">
-  <img src="figure/Experiment_Result.png" width="1024" alt="Multi-task Speech Understanding Results">
+  <img src="figure/Experiment_Results.png" width="1024" alt="Multi-task Speech Understanding Results">
 </p>
 
 These results show that FastSLM maintains competitive performance across diverse speech-language tasks despite its highly compressed speech representation.
