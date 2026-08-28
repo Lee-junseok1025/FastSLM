@@ -11,6 +11,42 @@ FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech un
   <img src="figure/HTA.png" width="1024" alt="HTA architecture">
 </p>
 
+
+## 📊 Experimental Results
+
+FastSLM achieves a strong balance between speech understanding performance and computational efficiency while using only **1.67 speech tokens/sec**.
+
+<p align="center">
+  <img src="figure/Experiment_Result.png" width="1024" alt="Multi-task Speech Understanding Results">
+</p>
+
+These results show that FastSLM maintains competitive performance across diverse speech-language tasks despite its highly compressed speech representation.
+
+
+### Long-form Scalability
+
+FastSLM is designed for efficient long-context speech processing. In our long-form scalability experiments, FastSLM exhibits near-linear memory growth and can process speech inputs of up to **8 hours using less than 30 GB of GPU memory** on a 40 GB A100 GPU.
+
+<p align="center">
+  <img src="figure/long_form_scalability.png" width="850" alt="Long-form scalability">
+</p>
+
+
+## 🔍 Hierarchical Attention Visualization
+
+To analyze how HTA processes long-form speech, we visualize the cross-attention distributions across its hierarchical stages.
+
+As speech duration increases, the attention distribution progressively shifts toward deeper abstraction stages. Early stages primarily preserve fine-grained local acoustic information, while deeper stages increasingly capture broader temporal and semantic context.
+
+This behavior illustrates how HTA gradually transforms dense frame-level speech representations into compact higher-level representations instead of performing aggressive compression in a single step.
+
+<p align="center">
+  <img src="figure/HTA_attn_map.png" width="900" alt="Hierarchical attention visualization">
+</p>
+
+> **Interpretation:** HTA progressively reallocates attention across hierarchical levels as the input duration increases, supporting multi-scale temporal abstraction for long-form speech.
+
+
 ## ⚙️ Installation
 
 - System Requirements
