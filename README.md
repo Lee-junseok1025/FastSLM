@@ -1,5 +1,5 @@
 # 🚀 FastSLM: Hierarchical Temporal Abstraction for Efficient Long-Form Speech Adaptation
-> 🎉 **Accepted to Findings of EMNLP 2026**
+> 🎉 **Findings of the Association for Computational Linguistics: EMNLP 2026**
 
 FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech understanding. It introduces the Hierarchical Temporal Abstractor (HTA), which progressively compresses speech representations to only 1.67 tokens/sec while preserving linguistic information.
 
