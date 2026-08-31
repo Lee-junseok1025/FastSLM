@@ -1,4 +1,8 @@
 # 🚀 FastSLM: Hierarchical Temporal Abstraction for Efficient Long-Form Speech Adaptation
+[![arXiv](https://img.shields.io/badge/arXiv-260X.XXXXX-b31b1b.svg)](https://arxiv.org/abs/2601.06199)
+[![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue)](https://huggingface.co/okestro-ai-lab/FastSLM-ASR)
+[![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue)](https://huggingface.co/okestro-ai-lab/FastSLM)
+
 > 🎉 **Findings of the Association for Computational Linguistics: EMNLP 2026**\
 > Paper: https://arxiv.org/abs/2601.06199
 
