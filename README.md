@@ -3,7 +3,7 @@
 [![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Model-yellow)](https://huggingface.co/okestro-ai-lab/FastSLM-ASR)
 [![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Model-yellow)](https://huggingface.co/okestro-ai-lab/FastSLM)
 
-> 🎉 **Findings of the Association for Computational Linguistics: EMNLP 2026**
+> 🎉 **Accepted at EMNLP 2026 Findings**
 
 FastSLM is a token-efficient Speech-Language Model (SLM) for long-form speech understanding. It introduces the Hierarchical Temporal Abstractor (HTA), which progressively compresses speech representations to only 1.67 tokens/sec while preserving linguistic information.
 
